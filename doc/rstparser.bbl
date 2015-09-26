@@ -1,0 +1,31 @@
+\begin{thebibliography}{1}
+
+\bibitem{Feng:12:Text}
+Vanessa~Wei Feng and Graeme Hirst.
+\newblock {Text-level Discourse Parsing with Rich Linguistic Features}.
+\newblock In {\em {Proceedings of ACL}}, 2012.
+
+\bibitem{Ji:14:RepLearn}
+Yangfeng Ji and Jacob Eisenstein.
+\newblock {Representation Learning for Text-level Discourse Parsing}.
+\newblock In {\em {ACL}}, 2014.
+
+\bibitem{Joty:13:Comb}
+Shafiq Joty, Giuseppe Carenini, Raymond Ng, and Yashar Mehdad.
+\newblock {Combining Intra- and Multi-sentential Rhetorical Parsing for
+  Document-level Discourse Analysis}.
+\newblock In {\em {Proceedings of ACL}}, 2013.
+
+\bibitem{Marcu:99:ACL}
+Daniel Marcu.
+\newblock {A Decision-Based Approach to Rhetorical Parsing}.
+\newblock In {\em {Proceedings of ACL}}, pages 365--372, College Park,
+  Maryland, USA, June 1999. Association for Computational Linguistics.
+
+\bibitem{Sagae:05:SR}
+Kenji Sagae and Alon Lavie.
+\newblock {A Classifier-based Parser with Linear Run-Time Complexity}.
+\newblock In {\em {Proceedings of the Ninth International Workshop on Parsing
+  Technology (IWPT)}}, pages 125--132, 2005.
+
+\end{thebibliography}

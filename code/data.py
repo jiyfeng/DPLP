@@ -1,7 +1,7 @@
 ## data.py
 ## Author: Yangfeng Ji
 ## Date: 09-13-2014
-## Time-stamp: <yangfeng 03/02/2015 17:39:25>
+## Time-stamp: <yangfeng 09/24/2015 15:47:28>
 
 """ Construct data for training/dev/test data.
 Following three steps:
@@ -21,7 +21,8 @@ from cPickle import dump, load
 import os, numpy, gzip
 
 class Data(object):
-    def __init__(self, vocab={}, labelmap={}, withdp=False,
+    def __init__(self, vocab={}, labelmap={}, bcvocab=None,
+                 withdp=False,
                  fdpvocab=None, fprojmat=None):
         """ Initialization
 
@@ -32,6 +33,7 @@ class Data(object):
         :param labelmap: collections of {label:index}
         """
         self.vocab, self.labelmap = vocab, labelmap
+        self.bcvocab = bcvocab
         self.actionlist = []
         self.samplelist = []
         self.M, self.L = None, None
@@ -60,7 +62,7 @@ class Data(object):
             fmerge = fdis.replace('.dis', '.merge')
             rst = RSTTree(fdis, fmerge)
             rst.build()
-            actionlist, samplelist = rst.generate_samples()
+            actionlist, samplelist = rst.generate_samples(self.bcvocab)
             self.actionlist += actionlist
             self.samplelist += samplelist
         

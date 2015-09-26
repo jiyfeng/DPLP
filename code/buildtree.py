@@ -1,7 +1,7 @@
 ## buildtree.py
 ## Author: Yangfeng Ji
 ## Date: 09-10-2014
-## Time-stamp: <yangfeng 02/19/2015 20:24:09>
+## Time-stamp: <yangfeng 09/25/2015 16:44:42>
 
 from datastructure import *
 from util import extractrelation
@@ -55,6 +55,38 @@ def postorder_DFT(tree, nodelist):
     nodelist.append(tree)
     return nodelist
 
+
+def getparse(tree, parse):
+    """ Get parse tree
+
+    :type tree: SpanNode instance
+    :param tree: an binary RST tree
+
+    :type parse: string
+    :param parse: parse tree in string format
+    """
+    if (tree.lnode is None) and (tree.rnode is None):
+        # Leaf node
+        parse += " ( EDU " + str(tree.nucedu)
+    else:
+        parse += " ( " + tree.form
+        # get the relation from its satellite node
+        if tree.form == 'NN':
+            parse += "-" + extractrelation(tree.rnode.relation)
+        elif tree.form == 'NS':
+            parse += "-" + extractrelation(tree.rnode.relation)
+        elif tree.form == 'SN':
+            parse += "-" + extractrelation(tree.lnode.relation)
+        else:
+            raise ValueError("Unrecognized N-S form")
+    # print tree.relation
+    if tree.lnode is not None:
+        parse = getparse(tree.lnode, parse)
+    if tree.rnode is not None:
+        parse = getparse(tree.rnode, parse)
+    parse += " ) "
+    return parse
+        
 
 def checkcontent(label, c):
     """ Check whether the content is legal

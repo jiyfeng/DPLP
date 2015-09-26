@@ -1,0 +1,21 @@
+2       4       Malaysian-based malaysian-based JJ      amod    5       MISC     (NP (NP (JJ Malaysian-based) 7
+2       5       companies       company NNS     pobj    3       O        (NNS companies))       7
+2       6       from    from    IN      prep    5       O        (PP (IN from)  7
+2       7       the     the     DT      det     9       O        (NP (DT the)   7
+2       8       Singapore       Singapore       NNP     nn      9       LOCATION         (NNP Singapore)      7
+2       9       exchange        exchange        NN      pobj    6       O        (NN exchange))))))     7
+2       10      may     may     MD      aux     15      O        (VP (MD may)   7
+2       11      not     not     RB      neg     15      O        (RB not)       7
+2       12      be      be      VB      cop     15      O        (VP (VB be)    7
+2       13      a       a       DT      det     15      O        (NP (DT a)     7
+2       14      smooth  smooth  JJ      amod    15      O        (JJ smooth)    7
+2       15      process process NN      ccomp   18      O        (NN process)))))       7
+2       16      ,       ,       ,       None    None    O        (, ,)  7
+2       17      analysts        analyst NNS     nsubj   18      O        (NP (NNS analysts))    8
+2       18      say     say     VBP     root    0       O        (VP (VBP say)) 8
+2       19      .       .       .       None    None    O        (. .)))        8
+
+3       1       Though  though  IN      mark    7       O        (ROOT (S (SBAR (IN Though)     9
+3       2       the     the     DT      det     3       O        (S (NP (DT the)        9
+3       3       split   split   NN      nsubjpass       7       O        (NN split))    9
+3       4       has     have    VBZ     aux     7       O        (VP (VBZ has)  9

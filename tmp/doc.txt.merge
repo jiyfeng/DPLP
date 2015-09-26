@@ -1,0 +1,8 @@
+0	1	I	I	PRP	nsubj	2	O	 (ROOT (S (NP (PRP I))	1
+0	2	like	like	VBP	root	0	O	 (VP (VBP like)	1
+0	3	GT.	gt.	NN	dobj	2	O	 (NP (NN GT.)))))	1
+
+1	1	I	I	PRP	root	0	O	 (ROOT (NP (NP (PRP I))	2
+1	2	hat	hat	NN	nn	3	O	 (NP (NN hat)	2
+1	3	GT.	gt.	NN	dep	1	O	 (NN GT.))))	2
+

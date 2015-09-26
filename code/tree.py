@@ -1,7 +1,7 @@
 ## tree.py
 ## Author: Yangfeng Ji
 ## Date: 08-29-2014
-## Time-stamp: <yangfeng 02/21/2015 18:39:11>
+## Time-stamp: <yangfeng 09/24/2015 15:45:12>
 
 """ Any operation about an RST tree should be here
 1, Build general/binary RST tree from annotated file
@@ -61,13 +61,16 @@ class RSTTree(object):
         self.tree = backprop(self.tree, self.doc)
             
 
-    def write(self, fname):
-        """ Write tree into file (follow the dis file format)
+    def parse(self):
+        """ Get parse tree in string format
 
-        :type fname: string
-        :param fname: tree file name
+            For visualization, use nltk.tree:
+            from nltk.tree import Tree
+            t = Tree.fromstring(parse)
+            t.draw()
         """
-        pass
+        parse = getparse(self.tree, "")
+        return parse
 
 
     def bracketing(self):
@@ -83,8 +86,11 @@ class RSTTree(object):
         return brackets
 
 
-    def generate_samples(self):
+    def generate_samples(self, bcvocab):
         """ Generate samples from an binary RST tree
+
+        :type bcvocab: dict
+        :param bcvocab: brown clusters of words
         """
         # Sample list
         samplelist = []
@@ -96,7 +102,7 @@ class RSTTree(object):
         # Start simulating the shift-reduce parsing
         for action in actionlist:
             # Generate features
-            fg = FeatureGenerator(stack, queue, self.doc)
+            fg = FeatureGenerator(stack, queue, self.doc, bcvocab)
             features = fg.features()
             samplelist.append(features)
             # Change status of stack/queue
@@ -122,15 +128,17 @@ class RSTTree(object):
         return self.tree
 
 def test():
-    fdis = "../data/training/file1.dis"
-    fmerge = "../data/training/file1.merge"
+    fdis = "../data/training/file2.dis"
+    fmerge = "../data/training/file2.merge"
     rst = RSTTree(fdis, fmerge)
     rst.build()
-    actionlist, samplelist = rst.generate_samples()
+    strparse = rst.parse()
+    print strparse
+    # actionlist, samplelist = rst.generate_samples()
     # print actionlist
     # print samplelist
-    for (action, sample) in zip(actionlist, samplelist):
-        print action
+    # for (action, sample) in zip(actionlist, samplelist):
+    #     print action
     # print rst.bracketing()
 
 

@@ -1,12 +1,14 @@
 ## feature.py
 ## Author: Yangfeng Ji
 ## Date: 08-29-2014
-## Time-stamp: <yangfeng 03/01/2015 21:54:24>
+## Time-stamp: <yangfeng 09/24/2015 16:21:12>
 
-from util import getgrams
+from util import getgrams, getbc
+from cPickle import load
+import gzip
 
 class FeatureGenerator(object):
-    def __init__(self, stack, queue, doc):
+    def __init__(self, stack, queue, doc, bcvocab, nprefix=10):
         """ Initialization of feature generator
 
         Currently, we only consider the feature generated
@@ -24,6 +26,11 @@ class FeatureGenerator(object):
         :type doc: Doc instance
         :param doc: 
         """
+        # Predefined variables
+        self.npref = nprefix
+        # Load Brown clusters
+        self.bcvocab = bcvocab
+        # -------------------------------------
         self.doc = doc
         # Stack
         if len(stack) >= 2:
@@ -60,6 +67,10 @@ class FeatureGenerator(object):
         ## Distributional representation
         for feat in self.distributional_features():
             featlist.append(feat)
+        ## Brown clusters
+        if self.bcvocab is not None:
+            for feat in self.bc_features():
+                featlist.append(feat)
         return featlist
             
 
@@ -193,7 +204,6 @@ class FeatureGenerator(object):
             for gidx in self.doc.edudict[eduidx]:
                 word = tokendict[gidx].word.lower()
                 yield ('DisRep', 'FirstSpan', word)
-            
 
 
     def nucleus_features(self):
@@ -201,4 +211,29 @@ class FeatureGenerator(object):
         """
         pass
 
+    
+    def bc_features(self):
+        """ Feature extract from brown clusters
+            Features are only extracted from Nucleus EDU !!!!
+        """
+        tokendict = self.doc.tokendict
+        edudict = self.doc.edudict
+        if self.top1span is not None:
+            eduidx = self.top1span.nucedu
+            bcfeatures = getbc(eduidx, edudict, tokendict, 
+                               self.bcvocab, self.npref)
+            for feat in bcfeatures:
+                yield ('BC', 'Top1Span', feat)
+        if self.top2span is not None:
+            eduidx = self.top2span.nucedu
+            bcfeatures = getbc(eduidx, edudict, tokendict, 
+                               self.bcvocab, self.npref)
+            for feat in bcfeatures:
+                yield ('BC', 'Top2Span', feat)
+        if self.firstspan is not None:
+            eduidx = self.firstspan.nucedu
+            bcfeatures = getbc(eduidx, edudict, tokendict,
+                               self.bcvocab, self.npref)
+            for feat in bcfeatures:
+                yield ('BC', 'FirstSpan', feat)
 

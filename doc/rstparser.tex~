@@ -1,0 +1,80 @@
+% Work report
+% Date: 2011-11-23
+% Author: Yangfeng Ji @ Gatech
+% Time-stamp: <yangfeng 05/05/2014 22:30:38>
+
+\documentclass[12pt]{article}
+
+\usepackage{graphicx}
+\usepackage{fancybox}
+\usepackage{epsfig}
+\usepackage{float}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{subfigure}
+\usepackage{multirow}
+\usepackage{bm}
+
+\newcommand{\vocab}[1]{\mathcal{V}_{#1}}
+\newcommand{\vword}[2]{\mathbf{v}^{(#2)}_{#1}}
+\newcommand{\dirich}[1]{\text{DP}(#1)}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\parskip 2.0mm
+\topmargin  -2.0cm
+\textwidth 16cm
+\textheight 22.5cm
+\topmargin -1.5cm
+\oddsidemargin 0mm
+
+\title{Summary on\\
+``Modeling Topic Control to Detect Influence in Conversations using Nonparametric Topic Models''}
+\author{Yangfeng Ji}
+\date{May 3rd, 2014\\ Modified on \today}
+
+% ***************************************************
+\begin{document} 
+\maketitle
+% ***************************************************
+A new topic model --- Speaker Identity for Topic Segmentation (SITS) is proposed in this paper to capture who introduces new topics in conversations. Technically, the goal of SITS is to (1) identify topics across different conversations and (2) model the topic shift within each single conversation. 
+
+The plate diagram of SITS is given in Figure \ref{fig:plate}. As illustrated in this figure, the entire model consists of two parts: a hierarchical Dirichlet topic model and a Markov model on topic distributions within each conversation. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{plate.png}
+  \caption{Plate diagram of SITS.}
+  \label{fig:plate}
+\end{figure}
+
+Specifically, for topic modeling, a global topic distribution is given by $G_0\sim\dirich{\alpha,H}$. Within each {\em conversation} $c$, a conversation-specific topic distribution is drawn from a Dirichlet process parameterized by $\alpha_0$ and $G_0$, $G_c\sim\dirich{\alpha_0,G_0}$. Furthermore, in each {\em turn} $t$, the topic distribution is defined as $G_{c,t}$, where $t=1,\cdots,T$. Within each turn, the document (speech script) is modeled with the bag-of-words assumption. Overall, the topics are modeled by a three-layer hierarchical Dirichlet process.
+
+In turn $t$, there are two choices about topics for the current speaker. She could follow the topics from the previous speaker, or switch to a new topic distribution. Correspondingly, there are two options to define $G_{c,t}$ when $t\geq 2$. It could be either $G_{c,t}=G_{c,t-1}$ or a new topic distribution drawn from $G_{c,t}\sim\dirich{\alpha_c, G_c}$. By introducing a topic shift variable $l_{c,t}$ in turn $t$, the definition of $G_{c,t}$ can be formulated as 
+\begin{equation}
+  \label{eq:g-ct}
+  \left\{
+  \begin{array}{ll}
+    G_{c,t}=G_{c,t-1} & l_{c,t}=0\\
+    G_{c,t}\sim\dirich{\alpha_c, G_c} & l_{c,t}=1\\
+  \end{array}\right.
+\end{equation}
+where $l_{c,t}\sim\text{Beta}(\pi_m)$ and $\pi_m$ is a speaker-specific random variable, indicating the probability of topic shift in her turn. 
+
+In general, SITS can be viewed as an extension of the Hierarchical Dirichlet Process (HDP) proposed by Teh et al. (2006). The difference is, in the HDP, each document independently draws a new multinomial distribution from a Dirichlet process. 
+
+In experiments, the model was validated on five different datasets, including the 2012 primary election debates (2012 debate). The 2012 debate dataset consists of nine Republican Party presidential debates, with 40 unique participants (candidates, moderators and audience members). Because the dataset was not annotated, only qualitative evaluation is provided. 
+
+Figure \ref{fig:tend} shows the topic shift tendency $\pi$ of speakers in the 2012 debate dataset. As moderators, {\sc King}, {\sc Blitzer} and {\sc Cooper} are three speakers with high topic shift tendency. One interesting observation is that {\sc Romney} had a smallest topic shift tendency in the debates. One possible explanation given in the paper is ``{\em (he) tended to be less aggressive in his responses, arguably playing things safer in a way that was consistent with his general position throughout the primaries as the front-runner.}''
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{tendency.png}
+  \caption{Topic shift tendency $\pi$ of speakers in the 2012 debates dataset (larger means greater tendency).}
+  \label{fig:tend}
+\end{figure}
+
+
+% *******************END OF DOCUMENT*****************
+\end{document}
+

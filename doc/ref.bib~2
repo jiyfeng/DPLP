@@ -1,0 +1,20 @@
+@comment{x-kbibtex-personnameformatting=<%l><, %f>}
+
+@inproceedings{Joty:13:Comb,
+	author = "Joty, Shafiq and Carenini, Giuseppe and Ng, Raymond and Mehdad, Yashar",
+	booktitle = "{Proceedings of ACL}",
+	keywords = "Discourse",
+	localfile = "/home/yangfeng/Work/Discourse-Papers/Combining-ACL2013.pdf",
+	title = "{Combining Intra- and Multi-sentential Rhetorical Parsing for Document-level Discourse Analysis}",
+	year = "2013"
+}
+
+@inproceedings{Feng:12:Text,
+	author = "Feng, Vanessa Wei and Hirst, Graeme",
+	booktitle = "{Proceedings of ACL}",
+	keywords = "Discourse",
+	localfile = "/home/yangfeng/Work/Discourse-Papers/Note-Taking/Feng-12-Rich.pdf",
+	title = "{Text-level Discourse Parsing with Rich Linguistic Features}",
+	year = "2012"
+}
+

@@ -1,7 +1,7 @@
 ## main.py
 ## Author: Yangfeng Ji
 ## Date: 02-14-2015
-## Time-stamp: <yangfeng 03/02/2015 17:32:12>
+## Time-stamp: <yangfeng 09/25/2015 22:03:48>
 
 from code.readdoc import readdoc
 from code.data import Data
@@ -22,12 +22,13 @@ def createdoc():
     readdoc(rpath, ftst)
 
 
-def createtrndata(path="data/training/"):
-    data = Data(withdp=WITHDP,
-        fdpvocab="data/resources/word-dict.pickle.gz",
-        fprojmat="data/resources/projmat.pickle.gz")
+def createtrndata(path="data/training/", topn=10000, bcvocab=None):
+    data = Data(bcvocab=bcvocab,
+                withdp=WITHDP,
+                fdpvocab="data/resources/word-dict.pickle.gz",
+                fprojmat="data/resources/projmat.pickle.gz")
     data.builddata(path)
-    data.buildvocab(topn=15000)
+    data.buildvocab(topn=topn)
     data.buildmatrix()
     fdata = "data/sample/trn.data"
     flabel = "data/sample/trn.label"
@@ -52,8 +53,18 @@ def trainmodel():
 
 
 if __name__ == '__main__':
-    createtrndata(path="data/training/")
-    trainmodel()
-    evalparser(path="data/test/", report=True, withdp=WITHDP,
-        fdpvocab="data/resources/word-dict.pickle.gz",
-        fprojmat="data/resources/projmat.pickle.gz")
+    bcvocab=None
+    ## Use brown clsuters
+    with gzip.open("resources/bc3200.pickle.gz") as fin:
+        print 'Load Brown clusters for creating features ...'
+        bcvocab = load(fin)
+    ## Create training data
+    # createtrndata(path="data/training/", topn=8000, bcvocab=bcvocab)
+    ## Train model
+    # trainmodel()
+    ## Evaluate model on the RST-DT test set
+    evalparser(path="data/test/", report=True, 
+               bcvocab=bcvocab, draw=False,
+               withdp=WITHDP,
+               fdpvocab="data/resources/word-dict.pickle.gz",
+               fprojmat="data/resources/projmat.pickle.gz")

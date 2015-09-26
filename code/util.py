@@ -1,10 +1,13 @@
 ## util.py
 ## Author: Yangfeng Ji
 ## Date: 09-13-2014
-## Time-stamp: <yangfeng 03/02/2015 17:10:25>
+## Time-stamp: <yangfeng 09/25/2015 16:07:29>
 
 from scipy.sparse import lil_matrix, hstack
 from sklearn.preprocessing import normalize
+from nltk import Tree
+from nltk.draw.util import CanvasFrame
+from nltk.draw import TreeWidget
 
 def label2action(label):
     """ Transform label to action
@@ -14,6 +17,9 @@ def label2action(label):
         action = (items[0], None, None)
     elif len(items) == 3:
         action = tuple(items)
+    elif len(items) > 3:
+        relalabel = '-'.join(items[2:])
+        action = tuple((items[0], items[1], relalabel))
     else:
         raise ValueError("Unrecognized label: {}".format(label))
     return action
@@ -89,7 +95,12 @@ def vectorize(features, vocab, dpvocab=None, projmat=None):
 def extractrelation(s, level=0):
     """ Extract discourse relation on different level
     """
-    return s.lower().split('-')[0]
+    items = s.lower().split('-')
+    if items[0] == 'same':
+        rela = '_'.join(items[:2])
+    else:
+        rela = items[0]
+    return rela
 
 
 def reversedict(dct):
@@ -127,3 +138,48 @@ def getgrams(text, tokendict):
         token = tokendict[text[-2]].word.lower() + ' ' + tokendict[text[-1]].word.lower()
         grams.append(token)
     return grams
+
+
+def getbc(eduidx, edudict, tokendict, bcvocab, nprefix=5):
+    """ Get brown cluster features for tokens
+
+    :type eduidx: int 
+    :param eduidx: index of one EDU
+
+    :type edudict: dict
+    :param edudict: All EDUs in one dict
+
+    :type tokendict: dict of Token (data structure)
+    :param tokendict: all tokens in the doc, indexing by the
+                      document-level index
+
+    :type bcvocab: dict {word : braown-cluster-index}
+    :param bcvocab: brown clusters
+
+    :type nprefix: int
+    :param nprefix: number of prefix we want to keep from 
+                    cluster indices
+    """
+    text = edudict[eduidx]
+    bcfeatures = []
+    for gidx in text:
+        tok = tokendict[gidx].word.lower()
+        try:
+            bcidx = bcvocab[tok][:nprefix]
+            bcfeatures.append(bcidx)
+        except KeyError:
+            pass
+    return bcfeatures
+
+
+def drawrst(strtree, fname):
+    """ Draw RST tree into a file
+    """
+    if not fname.endswith(".ps"):
+        fname += ".ps"
+    cf = CanvasFrame()
+    t = Tree.fromstring(strtree)
+    tc = TreeWidget(cf.canvas(), t)
+    cf.add_widget(tc,10,10) # (10,10) offsets
+    cf.print_to_file(fname)
+    cf.destroy()

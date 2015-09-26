@@ -1,7 +1,7 @@
 ## parser.py
 ## Author: Yangfeng Ji
 ## Date: 08-29-2014
-## Time-stamp: <yangfeng 02/22/2015 11:33:43>
+## Time-stamp: <yangfeng 09/25/2015 16:40:09>
 
 """ Shift-reduce parser, including following functions
 1, Initialize parsing status given a sequence of texts
@@ -80,6 +80,7 @@ class SRParser:
             # EDU span
             node.eduspan = (lnode.eduspan[0],rnode.eduspan[1])
             # Nuc span / Nuc EDU
+            node.form = form
             if form == 'NN':
                 node.nucspan = (lnode.eduspan[0],rnode.eduspan[1])
                 node.nucedu = lnode.nucedu
