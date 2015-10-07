@@ -34,3 +34,9 @@ All the following commands will be run in a batch fasion, which means every comm
 ## 3. Training Your Own RST Parser ##
 
 TODO
+
+## Reference ##
+
+Please read the following paper for more technical details
+
+Yangfeng Ji, Jacob Eisenstein. *[Representation Learning for Text-level Discourse Parsing](http://jiyfeng.github.io/papers/ji-acl-2014.pdf)*. ACL 2014
