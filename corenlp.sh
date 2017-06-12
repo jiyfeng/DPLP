@@ -16,5 +16,5 @@ for FNAME in $PATH/*
 do
     /usr/bin/java -mx2g -cp "$scriptdir/*" edu.stanford.nlp.pipeline.StanfordCoreNLP -annotators tokenize,ssplit,pos,lemma,ner,parse -ssplit.eolonly -tokenize.whitespace true -file $FNAME
     # /usr/bin/java -mx2g -cp "$scriptdir/*" edu.stanford.nlp.pipeline.StanfordCoreNLP -annotators tokenize,ssplit,pos,lemma,ner,parse -file $FNAME
-    /bin/mv $(/usr/bin/basename $FNAME.xml) $PATH/
+    /bin/mv $(/usr/bin/basename $FNAME.out) $FNAME.xml
 done
