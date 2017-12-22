@@ -140,6 +140,7 @@ def combineparse2sent(sent, parse):
         item = parse.pop(0)
         parselist[tidx] += (" " + item)
         partialparse = parselist[tidx].replace(' ','')
+        partialparse = partialparse.encode("ascii", "ignore")
         word = tokenlist[tidx].replace(' ','')
         # print word, partialparse
         if (word + ')') in partialparse:
@@ -147,6 +148,7 @@ def combineparse2sent(sent, parse):
     # Attach to sent
     for (tidx, token) in enumerate(sent.tokenlist):
         item = parselist[tidx]
+        item = item.encode("ascii", "ignore")
         sent.tokenlist[tidx].partialparse = item
     return sent
 
