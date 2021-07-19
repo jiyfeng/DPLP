@@ -1,0 +1,10 @@
+click==7.1.2
+joblib==0.14.1
+nltk==3.4.1
+numpy==1.16.6
+regex==2021.7.6
+scikit-learn==0.20.4
+scipy==1.2.3
+singledispatch==3.6.2
+six==1.16.0
+tqdm==4.61.2
