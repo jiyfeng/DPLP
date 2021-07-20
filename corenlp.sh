@@ -14,5 +14,5 @@ JAVA_XMX=$1
 PATH=$2
 for FNAME in $PATH/*
 do
-  /usr/bin/java -Xmx$JAVA_XMX -cp "$scriptdir/*" edu.stanford.nlp.pipeline.StanfordCoreNLP -annotators tokenize,ssplit,pos,lemma,ner,parse -ssplit.eolonly -file $FNAME -outputFormat xml -outputDirectory $PATH
+  /usr/bin/java -Xmx$JAVA_XMX -cp "$scriptdir/*" edu.stanford.nlp.pipeline.StanfordCoreNLP -annotators tokenize,ssplit,pos,lemma,ner,parse -file $FNAME -outputFormat xml -outputDirectory $PATH
 done
