@@ -142,6 +142,8 @@ def combineparse2sent(sent, parse):
         partialparse = parselist[tidx].replace(' ','')
         partialparse = partialparse.encode("ascii", "ignore")
         word = tokenlist[tidx].replace(' ','')
+        if word == '(' or word  == ')':
+            word = sent.tokenlist[tidx].pos
         # print word, partialparse
         if (word + ')') in partialparse:
             tidx += 1
