@@ -26,4 +26,4 @@ if __name__ == '__main__':
     if len(sys.argv) == 2:
         main(rpath=sys.argv[1])
     else:
-        print "python convert.py data_path"
+        print("python convert.py data_path")
