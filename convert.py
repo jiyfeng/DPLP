@@ -17,7 +17,7 @@ def extract(fxml):
 def main(rpath):
     files = [join(rpath,fname) for fname in listdir(rpath) if fname.endswith(".xml")]
     for fxml in files:
-        print 'Processing file: {}'.format(fxml)
+        print('Processing file: {}'.format(fxml))
         extract(fxml)
 
 
